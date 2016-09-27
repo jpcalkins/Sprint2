@@ -1,0 +1,195 @@
+{
+  "COMMENT": "A CUBE, SPHERE, AND DIRECTIONAL LIGHTS",
+  "type": "node",
+  "name": "rootNode",
+
+  "backgroundMusic": "Dear One.mp3",
+  "children":
+  [
+    {
+      "COMMENT": "CAMERA LOOKING AT ORIGIN FROM ALONG THE Z AXIS",
+      "type": "perspectiveCamera",
+      "name": "camera1",
+      "eye": [2, 4, 8],
+      "center": [0, 0, 0],
+      "vup": [0, 1, 0],
+      "fov": 30
+    },
+    {
+      "COMMENT": "DIRECTIONAL LIGHT",
+      "type": "directionalLight",
+      "name": "light1",
+      "color": [1, 1, 0.5],
+      "position": [0.5, 1, 0.5]
+    },
+    {
+      "COMMENT": "DIRECTIONAL LIGHT",
+      "type": "directionalLight",
+      "name": "light2",
+      "color": [0.3, 0.3, 1],
+      "position": [-0.5, -1, 0.5]
+    },
+    {
+      "COMMENT": "Vertical Bar",
+      "type": "mesh",
+      "name": "verticalBar",
+      "translate": [-1.5, -0.4, 0],
+      "geometry": "tube",
+      "radiusTop": 0.1,
+      "radiusBottom": 0.1,
+      "height": 1.6,
+      "radiusSegments": 120,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "tubeMat",
+        "diffuseColor": [0.8, 0.8, 0.8]
+      }
+    },
+    {
+      "COMMENT": "Vertical Bar 2",
+      "type": "mesh",
+      "name": "verticalBar2",
+      "translate": [0, -0.4, 0],
+      "geometry": "tube",
+      "radiusTop": 0.1,
+      "radiusBottom": 0.1,
+      "height": 1.6,
+      "radiusSegments": 120,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "tubeMat",
+        "diffuseColor": [0.8, 0.8, 0.8]
+      }
+    },
+    {
+      "COMMENT": "Vertical Bar 3",
+      "type": "mesh",
+      "name": "verticalBar3",
+      "translate": [1.5, -0.4, 0],
+      "geometry": "tube",
+      "radiusTop": 0.1,
+      "radiusBottom": 0.1,
+      "height": 1.6,
+      "radiusSegments": 120,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "tubeMat",
+        "diffuseColor": [0.8, 0.8, 0.8]
+      }
+    },
+    {
+      "COMMENT": "donut",
+      "type": "mesh",
+      "name": "mmmDonut",
+      "translate": [-1.5, -0.1, 0],
+      "rotate": [1, 0, 0, 1.57],
+      "geometry": "donut",
+      "radius": 0.2,
+      "tube": 0.1,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0.75, 100, 0.2]
+      }
+    },
+    {
+      "COMMENT": "donut",
+      "type": "mesh",
+      "name": "mmmDonut1",
+      "translate": [-1.5, -0.4, 0],
+      "rotate": [1, 0, 0, 1.57],
+      "geometry": "donut",
+      "radius": 0.3,
+      "tube": 0.2,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0.35, 0.09, 0.93]
+      }
+    },
+    {
+      "COMMENT": "donut",
+      "type": "mesh",
+      "name": "mmmDonut2",
+      "translate": [-1.5, -0.9, 0],
+      "rotate": [1, 0, 0, 1.57],
+      "geometry": "donut",
+      "radius": 0.4,
+      "tube": 0.3,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0, 1, 1]
+      }
+    },
+    {
+      "COMMENT": "donut",
+      "type": "mesh",
+      "name": "mmmDonut",
+      "translate": [1.5, -1.1, 0],
+      "rotate": [1, 0, 0, 1.57],
+      "geometry": "donut",
+      "radius": 0.2,
+      "tube": 0.1,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0.79, 100, 0.2]
+      }
+    },
+    {
+      "COMMENT": "donut",
+      "type": "mesh",
+      "name": "mmmDonut1",
+      "translate": [1.5, -0.8, 0],
+      "rotate": [1, 0, 0, 1.57],
+      "geometry": "donut",
+      "radius": 0.3,
+      "tube": 0.2,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0.35, 0.09, 0.93]
+      }
+    },
+    {
+      "COMMENT": "donut",
+      "type": "mesh",
+      "name": "mmmDonut2",
+      "translate": [1.5, -0.3, 0],
+      "rotate": [1, 0, 0, 1.57],
+      "geometry": "donut",
+      "radius": 0.4,
+      "tube": 0.3,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0, 1, 1]
+      }
+    },
+    {
+      "COMMENT": "Base",
+      "type": "mesh",
+      "name": "base",
+      "translate": [0, -1.4, 0],
+      "geometry": "cube",
+      "width": 4.4,
+      "height": 0.4,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "donutMat",
+        "diffuseColor": [0.8, 0.1, 0.1]
+      }
+    }
+  ]
+}
