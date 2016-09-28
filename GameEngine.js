@@ -607,7 +607,7 @@ function parseMesh(jsonNode)
         if ("widthSegments"  in jsonNode) widthSegments  = jsonNode["widthSegments"];
         if ("heightSegments" in jsonNode) heightSegments = jsonNode["heightSegments"];
         geometry = new THREE.SphereGeometry(radius, heightSegments, widthSegments);
-    }else if(geometryType == "donut"){
+    }else if(geometryType == "donut" || geometryType == "torus"){
         var tube = 0.5;
         var radialSegments = 80;
         var tubularSegments = 60;
@@ -619,7 +619,7 @@ function parseMesh(jsonNode)
         if("arc" in jsonNode) arc = jsonNode["arc"];
         geometry = new THREE.TorusGeometry(radius, tube, radialSegments, tubularSegments, arc);
         geometry.visible = false;
-    }else if(geometryType == "tube"){
+    }else if(geometryType == "tube" || geometryType == "cylinder"){
         var radiusTop = 1;
         var radiusBottom = 1;
         var radiusSegments = 10;
