@@ -212,6 +212,11 @@ function onKeyDown(event)
 function onKeyUp(event)
 {
     var key = event.keyCode ? event.keyCode : event.which;
+
+    if(typeof(keyUpEvent) == "function"){
+        keyUpEvent(key);
+    }
+
     delete pressedKeys[key];
     //debug("onKeyDown " + key + "\n");
 }
