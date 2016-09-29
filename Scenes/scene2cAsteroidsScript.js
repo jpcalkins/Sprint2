@@ -66,13 +66,13 @@ READOUT.style["color"] = "#ff0"
 document.body.insertBefore(READOUT, document.body.firstChild);
 
 // AUDIO STUFF
-var SHOT_AUDIO = new Audio('shot.wav');
+var SHOT_AUDIO = new Audio('Scenes/shot.wav');
 SHOT_AUDIO.volume = 0.05;
 
-var THRUST_AUDIO = new Audio('thrust.wav');
+var THRUST_AUDIO = new Audio('Scenes/thrust.wav');
 THRUST_AUDIO.volume = 0.05;
 
-var BOOM_AUDIO = new Audio('boom.wav');
+var BOOM_AUDIO = new Audio('Scenes/boom.wav');
 BOOM_AUDIO.volume = 0.1;
 
 //-------------------------------------------------------------------------//

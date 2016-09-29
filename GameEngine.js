@@ -329,7 +329,7 @@ function parseSceneNode(jsonNode, sceneNode)
 
     // Whether the node starts out as visible.
     if ("visible" in jsonNode) {
-        sceneNode.visible(jsonNode["visible"]);
+        sceneNode.visible = jsonNode["visible"];
     }
 
     // Traverse all the child nodes. The typical code pattern here is:
@@ -357,27 +357,33 @@ function parseSceneNode(jsonNode, sceneNode)
                 sceneNode.add(camera);
                 if (currentCamera === undefined) currentCamera = camera;
                 parseSceneNode(childJsonNode, camera);
-            }else if (childType == "directionalLight") {
+            }
+            else if (childType == "directionalLight") {
                 light = parseDirectionalLight(childJsonNode);
                 sceneNode.add(light);
                 parseSceneNode(childJsonNode, light);
-            }else if(childType == "ambientLight"){
+            }
+            else if(childType == "ambientLight"){
                 light = parseAmbientLight(childJsonNode);
                 sceneNode.add(light);
                 parseSceneNode(childJsonNode, light);
-            }else if(childType == "pointLight"){
+            }
+            else if(childType == "pointLight"){
                 light = parsePointLight(childJsonNode);
                 sceneNode.add(light);
                 parseSceneNode(childJsonNode, light);
-            }else if(childType == "hemisphereLight"){
+            }
+            else if(childType == "hemisphereLight"){
                 light = parseHemisphereLight(childJsonNode);
                 sceneNode.add(light);
                 parseSceneNode(childJsonNode, light);
-            }else if(childType == "spotLight"){
+            }
+            else if(childType == "spotLight"){
                 light = parseSpotLight(childJsonNode);
                 sceneNode.add(light);
                 parseSceneNode(childJsonNode, light);
-            }else if (childType == "mesh") {
+            }
+            else if (childType == "mesh") {
                 var mesh = parseMesh(childJsonNode);
                 sceneNode.add(mesh);
                 parseSceneNode(childJsonNode, mesh);
@@ -629,6 +635,27 @@ function parseMesh(jsonNode)
         if("radiusSegments" in jsonNode) radiusSegments = jsonNode["radiusSegments"];
         if("heightSegments" in jsonNode) heightSegments = jsonNode["heightSegments"];
         geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments);
+    }else if(geometryType == "cone"){
+        var rSegments = 8;
+        var hSegments = 1;
+        if("radius" in jsonNode) radius = jsonNode["radius"];
+        if("height" in jsonNode) height = jsonNode["height"];
+        if("radiusSegments" in jsonNode) rSegments = jsonNode["radiusSegments"];
+        if("heightSegments" in jsonNode) hSegments = jsonNode["heightSegments"];
+        geometry = new THREE.ConeGeometry(radius, height, rSegments, hSegments);
+    }else if(geometryType == "plane"){
+        var width = 5;
+        var height = 5;
+        var wSegments = 1;
+        var hSegments = 1;
+        if("width" in jsonNode) width = jsonNode["width"];
+        if("height" in jsonNode) height = jsonNode["height"];
+        if("widthSegments" in jsonNode) wSegments = jsonNode["widthSegments"];
+        if("heightSegments" in jsonNode) hSegments = jsonNode["heightSegments"];
+        geometry = new THREE.PlaneGeometry(width, height, wSegments, hSegments);2
+    }else if(geometryType == "sprite"){
+        var sprite = new THREE.Sprite(material);
+        return sprite;
     }
     if("MatCap" in jsonNode){
         // modify UVs to accommodate MatCap texture
@@ -660,34 +687,42 @@ function parseMaterial(jsonNode)
     var dColor = "diffuseColor";
     var dMap = "diffuseMap";
     var sColor = "specularColor";
+    var material;
 
     //debug("parseMaterial\n");
-    var material = new THREE.MeshLambertMaterial();
-    if (jsonNode === undefined) return material;
     var type = jsonNode["type"];
 
     // Lambertian material
     if (type == "meshLambertMaterial")
     {
+        material = new THREE.MeshLambertMaterial();
         if (dColor in jsonNode) material.color = new THREE.Color(jsonNode[dColor][0], jsonNode[dColor][1], jsonNode[dColor][2]);
-        if (dMap in jsonNode) material.map = parseTexture(jsonNode[dMap]);
+        if (dMap in jsonNode) material.map = parseTexture(jsonNode[dMap], jsonNode);
 
         return material;
     }else if(type == "meshBasicMaterial"){
         material = new THREE.MeshBasicMaterial();
         if("color" in jsonNode) material.color = new THREE.Color(jsonNode["color"][0], jsonNode["color"][1], jsonNode["color"][2]);
-        if("map" in jsonNode) material.map = parseTexture(jsonNode["map"]);
+        if("map" in jsonNode) material.map = parseTexture(jsonNode["map"], jsonNode);
 
         return material;
-    }else if(type="meshPhongMaterial"){
+    }else if(type== "meshPhongMaterial"){
         material = new THREE.MeshPhongMaterial();
         if(dColor in jsonNode) material.color = new THREE.Color(jsonNode[dColor][0], jsonNode[dColor][1], jsonNode[dColor][2]);
         if(sColor in jsonNode) material.specular = new THREE.Color(jsonNode[sColor][0], jsonNode[sColor][1], jsonNode[sColor][2]);
         if("specularMap" in jsonNode) material.specularMap = parseTexture(jsonNode["specularMap"]);
         if("shininess" in jsonNode) material.shininess = jsonNode["shininess"];
-        if("diffuseMap" in jsonNode) material.map = parseTexture(jsonNode["diffuseMap"]);
-        if("bumpMap" in jsonNode) material.bumpMap = parseTexture(jsonNode["bumpMap"]);
+        if("diffuseMap" in jsonNode) material.map = parseTexture(jsonNode["diffuseMap"], jsonNode);
+        if("bumpMap" in jsonNode) material.bumpMap = parseTexture(jsonNode["bumpMap"], jsonNode);
         if("bumpScale" in jsonNode) material.bumpScale = jsonNode["bumpScale"];
+
+        return material;
+    }else if(type== "spriteMaterial"){
+        material = new THREE.SpriteMaterial();
+        if("color" in jsonNode) material.color = new THREE.Color(jsonNode["color"][0], jsonNode["color"][1], jsonNode["color"][2]);
+        if("map" in jsonNode) material.map = parseTexture(jsonNode["map"], jsonNode);
+        if("rotation" in jsonNode) material.rotation = jsonNode["rotation"];
+        if("fog" in jsonNode) material.fog = jsonNode["fog"];
 
         return material;
     }
@@ -700,11 +735,24 @@ function parseMaterial(jsonNode)
 // PARSE A TEXTURE MAP - ASYNCHRONOUSLY LOADS THE TEXTURE IMAGE
 //----------------------------------------------------------------------//
 
-function parseTexture(textureURL)
+function parseTexture(textureURL, jsonNode)
 {
     textureURL = sceneFolder+textureURL;
     //debug("parseTexture: " + textureURL + "\n");
     var texture = new THREE.Texture();
+    texture.anisotropy = currentRenderer.getMaxAnisotropy();
+    if ("repeat" in jsonNode) {
+        var repeat = jsonNode["repeat"];
+        texture.repeat.x = repeat[0];
+        texture.repeat.y = repeat[1];
+    }
+    if ("offset" in jsonNode) {
+        var offset = jsonNode["offset"];
+        texture.offset.x = offset[0];
+        texture.offset.y = offset[1];
+    }
+
+    if (texture.anisotropy > 4.0) texture.anisotropy = 4.0;
     var loader = new THREE.ImageLoader(loadingManager);
     loader.load(
         textureURL,
@@ -713,7 +761,7 @@ function parseTexture(textureURL)
             texture.needsUpdate = true;
         }
     );
-    texture.anisotropy = currentRenderer.getMaxAnisotropy();
+
     return texture;
 }
 
