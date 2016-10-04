@@ -87,69 +87,94 @@
       "COMMENT": "Roller1",
       "type": "mesh",
       "name": "roller1",
-      "translate": [-5, 0.5, 3],
+      "translate": [-14, 0.5, 3],
       "rotate": [1, 0, 0, -1.57],
       "geometry": "cylinder",
       "radiusSegments": 20,
       "heightSegments": 2,
       "radiusTop": 0.5,
       "radiusBottom": 0.5,
-      "height": 2,
+      "height": 1.5,
+      "castShadow": true,
       "material":
       {
         "type": "meshLambertMaterial",
         "name": "roller1",
         "diffuseColor": [1, 1, 0]
+      },
+      "userData": {
+        "scripts": ["rollScript"],
+        "speed": 0.1
       }
     },
     {
       "COMMENT": "Roller2",
       "type": "mesh",
       "name": "donut",
-      "translate": [-5, 1, 0],
+      "translate": [-14, 1, 0],
       "rotate": [0, 0, 0, -1.57],
       "geometry": "torus",
       "radius": 0.75,
       "tube": 0.5,
+      "castShadow": true,
       "material":
       {
-        "type": "meshLambertMaterial",
+        "type": "meshPhongMaterial",
         "name": "roller2",
-        "diffuseColor": [1, 0, 1]
+        "diffuseColor": [1, 1, 1],
+        "specularColor": [0.1, 0.1, 0.1],
+        "diffuseMap": "eyeTexture2.jpg",
+        "shininess": 10
+      },
+      "userData": {
+        "scripts": ["rollScript"],
+        "speed": -0.05
       }
     },
     {
       "COMMENT": "Roller3",
       "type": "mesh",
       "name": "ball",
-      "translate": [-5, 1, -3],
+      "translate": [-14, 1, -3],
       "rotate": [0, 0, 0, -1.57],
       "geometry": "sphere",
-      "radius": 1,
+      "radius": 0.75,
       "widthSegments": 20,
       "heightSegments": 20,
+      "castShadow": true,
       "material":
       {
-        "type": "meshLambertMaterial",
+        "type": "meshPhongMaterial",
         "name": "roller2",
-        "diffuseColor": [0, 1, 1]
+        "diffuseColor": [1, 1, 1],
+        "specularColor": [0.1, 0.1, 0.1],
+        "diffuseMap": "eyeTexture2.jpg",
+        "shininess": 10
+      },
+      "userData": {
+        "scripts": ["rollScript"],
+        "speed": 0.1
       }
     },
     {
       "COMMENT": "Player",
       "type": "mesh",
       "name": "Player",
-      "translate": [0, 0.5, 4.75],
+      "translate": [0, 0.5, 4.5],
       "rotate": [0, 0, 0, -1.57],
       "geometry": "sphere",
       "radius": 0.5,
-      "widthSegments": 5,
-      "heightSegments": 5,
+      "widthSegments": 20,
+      "heightSegments": 20,
+      "castShadow": true,
       "material":
       {
-        "type": "meshLambertMaterial",
+        "type": "meshPhongMaterial",
         "name": "roller2",
-        "diffuseColor": [1, 0, 1]
+        "diffuseColor": [1, 1, 1],
+        "specularColor": [0.1, 0.1, 0.1],
+        "diffuseMap": "PlayerSkin.jpg",
+        "shininess": 10
       },
       "userData": {
         "scripts": ["jumpScript"]
