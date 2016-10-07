@@ -20,6 +20,26 @@ function scriptOnLoad(currentScene){
     ball = currentScene.getObjectByName("ball");
     donut = currentScene.getObjectByName("donut");
     cylinder = currentScene.getObjectByName("roller1");
+    var grassMap = currentScene.getObjectByName("ground").material.map;
+    grassMap.wrapS = THREE.RepeatWrapping;
+    grassMap.wrapT = THREE.RepeatWrapping;
+    grassMap.repeat.x = 5;
+    grassMap.repeat.y = 3;
+
+    var roadMap1 = currentScene.getObjectByName("road1").material.map;
+    roadMap1.wrapS = THREE.RepeatWrapping;
+    roadMap1.wrapT = THREE.RepeatWrapping;
+    roadMap1.repeat.x = 10;
+
+    var roadMap2 = currentScene.getObjectByName("road2").material.map;
+    roadMap2.wrapS = THREE.RepeatWrapping;
+    roadMap2.wrapT = THREE.RepeatWrapping;
+    roadMap2.repeat.x = 10;
+
+    var roadMap3 = currentScene.getObjectByName("road3").material.map;
+    roadMap3.wrapS = THREE.RepeatWrapping;
+    roadMap3.wrapT = THREE.RepeatWrapping;
+    roadMap3.repeat.x = 10;
 
     copyGeometry(ball, 6);
     copyGeometry(donut, 6);
@@ -69,14 +89,14 @@ function jumpScript(sceneNode){
             sceneNode.position.z += (direction * totalDistance);
             //alert(player.position.z);
             animFrame++;
-            // var mat = new THREE.Matrix4();
-            // mat.set(
-            //     0, 0, 0, 0,
-            //     0, 0.5, 0, 0,
-            //     0, 0, 0, 0,
-            //     0, 0, 0, 1
-            // );
-            // player.matrix.applyMatrix(mat);
+             var mat = new THREE.Matrix4();
+             mat.set(
+                1, 0, 0, 0,
+                0, 1.5, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            );
+            //player.matrix.applyMatrix(mat);
         } else {
             animFrame = 1;
             JUMPING = false;
@@ -91,10 +111,29 @@ function rollScript(sceneNode){
         } else if (sceneNode.position.x < -14) {
             sceneNode.position.x = 14
         }
-        var distance = sceneNode.userData.speed;//0.2;
-        var angle = (distance / sceneNode.geometry.parameters.radius * 4 * Math.PI);
+        var distance = sceneNode.userData.speed;
+        var radius;
+        var axis = "z";
+        switch (sceneNode.name){
+            case "roller1":
+                radius = sceneNode.geometry.parameters.radiusTop;
+                axis = "y";
+                break;
+            case "donut":
+                radius = sceneNode.geometry.parameters.radius + sceneNode.geometry.parameters.tube;
+                break;
+            case "ball":
+                radius = sceneNode.geometry.parameters.radius;
+                break;
+        }
+        var angle = 200 * distance / (radius * 2 * Math.PI);
         sceneNode.position.x += distance;
-        //sceneNode.rotation.z += degree2rad(-angle);
+        if(axis == "z"){
+            sceneNode.rotation.z += degree2rad(-angle);
+        }else{
+            sceneNode.rotation.y += degree2rad(angle);
+        }
+
     }
 }
 function degree2rad(degree){
