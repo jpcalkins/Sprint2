@@ -10,7 +10,7 @@
       "COMMENT": "CAMERA LOOKING AT ORIGIN FROM ALONG THE Z AXIS",
       "type": "perspectiveCamera",
       "name": "camera1",
-      "eye": [0, 10.75, 12],
+      "eye": [0, 10, 12],
       "center": [0, 0, 0],
       "vup": [0, 1, 0],
       "fov": 30
@@ -102,8 +102,8 @@
       "geometry": "cylinder",
       "radiusSegments": 20,
       "heightSegments": 2,
-      "radiusTop": 1,
-      "radiusBottom": 1,
+      "radiusTop": 0.7,
+      "radiusBottom": 0.7,
       "height": 1.5,
       "castShadow": true,
       "material":
@@ -123,11 +123,11 @@
       "COMMENT": "Roller2",
       "type": "mesh",
       "name": "donut",
-      "translate": [-14, 1, 0],
+      "translate": [-14, 0.9, 0],
       "rotate": [0, 0, 0, -1.57],
       "geometry": "torus",
       "radius": 0.75,
-      "tube": 0.5,
+      "tube": 0.3,
       "castShadow": true,
       "material":
       {
@@ -184,7 +184,7 @@
         "name": "roller2",
         "diffuseColor": [1, 1, 1],
         "specularColor": [0.1, 0.1, 0.1],
-        "diffuseMap": "PlayerSkin.jpg",
+        "diffuseMap": "PlayerSkin2.jpg",
         "shininess": 10
       },
       "userData": {
