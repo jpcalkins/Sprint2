@@ -46,6 +46,11 @@ function scriptOnLoad(currentScene){
         roadMap.repeat.x = 10;
     }
 
+    var finishMap = currentScene.getObjectByName("finish").material.map;
+    finishMap.wrapS = THREE.RepeatWrapping;
+    finishMap.wrapT = THREE.RepeatWrapping;
+    finishMap.repeat.x = 40;
+
     // Create overlay as div element and set its style
 //
     READOUT.style["position"] = "absolute";      // fixed on screen
@@ -128,18 +133,12 @@ function jumpScript(sceneNode){
                     if (!isNaN(temp.max.x) && playerBox.intersectsBox(temp)) {
                         PLAYING = false;
                         lives --;
+                        JUMPING = false;
+                        animFrame = 1;
                         if(lives < 0){
                             infoDiv.textContent = "You Lose!!!";
-                            // var loserDiv = document.createElement("h1");
-                            // var loser = document.createTextNode("You Lose!!!");
-                            // loserDiv.appendChild(loser);
-                            // READOUT.appendChild(loserDiv);
                         }else{
                             infoDiv.textContent = "Press \'r\' to try again!";
-                            // var restart = document.createTextNode("Press \'r\' to try again!");
-                            // restartDiv.style['float'] = "left";
-                            // restartDiv.appendChild(restart);
-                            // READOUT.appendChild(restartDiv);
                         }
                     }
                 }

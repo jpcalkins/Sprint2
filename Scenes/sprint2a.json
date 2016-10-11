@@ -40,6 +40,24 @@
       }
     },
     {
+      "COMMENT": "FinishLine",
+      "type": "mesh",
+      "name": "finish",
+      "translate": [0, 0, -5],
+      "rotate": [1, 0, 0, -1.57],
+      "geometry": "plane",
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "width": 40,
+      "height": 2,
+      "material":
+      {
+        "type": "meshLambertMaterial",
+        "name": "finishMap",
+        "diffuseMap": "finishLine.jpg"
+      }
+    },
+    {
       "COMMENT": "Road",
       "type": "mesh",
       "name": "road1",
